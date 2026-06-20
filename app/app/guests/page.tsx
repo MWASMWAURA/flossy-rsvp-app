@@ -88,34 +88,37 @@ export default function GuestsPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Guest List</h1>
+    <div className="space-y-6 pb-8">
+      <div className="animate-fade-in-up flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Guest List</h1>
+          <p className="text-sm text-muted-foreground mt-1">{filtered.length} guest{filtered.length !== 1 ? 's' : ''}</p>
+        </div>
         <Link href="/app/import">
-          <Button size="sm" variant="outline" className="gap-2">
-            <Upload className="h-4 w-4" />
-            Import
+          <Button size="lg" className="gap-2 bg-gradient-to-r from-cobalt to-cobalt/90 hover:from-cobalt/90 hover:to-cobalt/80 font-semibold hover:shadow-lg transition-all duration-300">
+            <Upload className="h-5 w-5" />
+            Import Guests
           </Button>
         </Link>
       </div>
 
       {/* Search & Filter Bar */}
-      <Card className="flex flex-col gap-4 p-4 md:flex-row md:items-end">
+      <Card className="animate-fade-in-up card-gradient flex flex-col gap-4 p-5 md:flex-row md:items-end border-0 hover:shadow-lg transition-all duration-300" style={{ animationDelay: '50ms' }}>
         <div className="flex-1">
-          <label className="text-xs font-medium text-muted-foreground">Search</label>
-          <div className="relative mt-1">
+          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Search</label>
+          <div className="relative mt-2">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder="Name, phone, email..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9"
+              className="pl-9 border-primary/20 focus:border-primary/40 transition-colors"
             />
           </div>
         </div>
 
         <div>
-          <label className="text-xs font-medium text-muted-foreground">Filter by Status</label>
+          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Filter</label>
           <Select
             value={filterStatus ?? ""}
             onValueChange={(v) => setFilterStatus(v === "" ? null : v)}
@@ -130,7 +133,7 @@ export default function GuestsPage() {
         </div>
 
         <div>
-          <label className="text-xs font-medium text-muted-foreground">Sort by</label>
+          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Sort</label>
           <Select
             value={sortBy}
             onValueChange={(v) => setSortBy(v as typeof sortBy)}
@@ -145,26 +148,30 @@ export default function GuestsPage() {
 
       {/* Bulk Actions Bar */}
       {selectedGuests.size > 0 && (
-        <Card className="flex items-center justify-between gap-4 bg-primary/5 p-4">
-          <p className="text-sm font-medium">{selectedGuests.size} selected</p>
+        <Card className="animate-slide-in-left flex items-center justify-between gap-4 bg-gradient-to-r from-primary/15 to-primary/5 p-5 border-l-4 border-primary rounded-xl">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+              <span className="font-bold text-primary">{selectedGuests.size}</span>
+            </div>
+            <p className="text-sm font-semibold">guest{selectedGuests.size !== 1 ? 's' : ''} selected</p>
+          </div>
           <div className="flex gap-2">
             <Button
               size="sm"
-              variant="outline"
               onClick={handleBulkReminder}
-              className="gap-2"
+              className="gap-2 bg-gradient-to-r from-amber to-amber/90 hover:from-amber/90 hover:to-amber/80 font-semibold text-white hover:shadow-lg transition-all"
             >
               <MessageSquare className="h-4 w-4" />
               Send Reminder
             </Button>
             {bulkStatusOpen ? (
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
                 {state.statuses.map((st) => (
                   <Button
                     key={st.id}
                     size="sm"
-                    variant="outline"
                     onClick={() => handleBulkStatusChange(st.id)}
+                    className={`font-semibold transition-all bg-${st.color}/80 hover:bg-${st.color}/90 text-white hover:shadow-lg`}
                   >
                     {st.label}
                   </Button>
@@ -173,8 +180,8 @@ export default function GuestsPage() {
             ) : (
               <Button
                 size="sm"
-                variant="outline"
                 onClick={() => setBulkStatusOpen(true)}
+                className="gap-2 bg-gradient-to-r from-teal to-teal/90 hover:from-teal/90 hover:to-teal/80 font-semibold text-white hover:shadow-lg transition-all"
               >
                 Change Status
               </Button>
@@ -192,25 +199,27 @@ export default function GuestsPage() {
 
       {/* Guests List */}
       {filtered.length === 0 ? (
-        <Card className="flex flex-col items-center justify-center gap-3 py-12 text-center">
-          <p className="text-muted-foreground">No guests found</p>
+        <Card className="animate-fade-in-up flex flex-col items-center justify-center gap-4 py-16 text-center card-gradient border-0">
+          <div className="text-4xl">🔍</div>
+          <p className="text-lg font-medium text-muted-foreground">No guests found</p>
           {eventGuests.length === 0 && (
             <Link href="/app/import">
-              <Button size="sm">Import your first guests</Button>
+              <Button size="lg" className="mt-4 bg-gradient-to-r from-cobalt to-cobalt/90 hover:from-cobalt/90 hover:to-cobalt/80 font-semibold">Import your first guests</Button>
             </Link>
           )}
         </Card>
       ) : (
         <div className="space-y-2">
-          {filtered.map((guest) => {
+          {filtered.map((guest, idx) => {
             const isSelected = selectedGuests.has(guest.id)
             const status = statusById(state.statuses, guest.statusId)
             return (
               <Link key={guest.id} href={`/app/guests/${guest.id}`}>
                 <Card
-                  className={`flex cursor-pointer items-center gap-3 p-4 transition-colors hover:bg-accent/50 ${
-                    isSelected ? "bg-primary/10" : ""
+                  className={`animate-fade-in-up flex cursor-pointer items-center gap-4 p-4 transition-all duration-300 border-0 hover:shadow-md hover:scale-102 group ${
+                    isSelected ? "bg-primary/15 ring-2 ring-primary/50" : "bg-card/50 hover:bg-card"
                   }`}
+                  style={{ animationDelay: `${idx * 25}ms` }}
                   onClick={(e) => {
                     if ((e.target as HTMLElement).closest("input")) {
                       e.preventDefault()
@@ -223,18 +232,18 @@ export default function GuestsPage() {
                     checked={isSelected}
                     onChange={() => toggleSelectGuest(guest.id)}
                     onClick={(e) => e.stopPropagation()}
-                    className="h-4 w-4 cursor-pointer rounded"
+                    className="h-5 w-5 cursor-pointer rounded border-2 border-primary/50 transition-all"
                   />
                   <div className="min-w-0 flex-1">
-                    <div className="font-medium">{fullName(guest)}</div>
-                    <div className="text-xs text-muted-foreground">
-                      {guest.phone}
-                      {guest.email && ` • ${guest.email}`}
+                    <div className="font-semibold text-base group-hover:text-primary transition-colors">{fullName(guest)}</div>
+                    <div className="text-xs text-muted-foreground mt-1 flex items-center gap-2">
+                      <span>📱 {guest.phone}</span>
+                      {guest.email && <span>📧 {guest.email}</span>}
                     </div>
                   </div>
-                  <div className="flex flex-col items-end gap-2">
+                  <div className="flex flex-col items-end gap-2 ml-auto">
                     {status && <StatusBadge status={status} />}
-                    <div className="text-xs text-muted-foreground">
+                    <div className="text-xs text-muted-foreground font-medium">
                       {guest.contactAttempts > 0 && `${guest.contactAttempts} calls`}
                       {guest.lastContactedAt && (
                         <div>{relativeTime(guest.lastContactedAt)}</div>

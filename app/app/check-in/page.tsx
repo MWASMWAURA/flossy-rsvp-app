@@ -75,104 +75,119 @@ export default function CheckInPage() {
   const notFound = searchQuery && searchResults.length === 0
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 pb-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold">Check-In</h1>
-          <p className="text-sm text-muted-foreground">
-            {arrivedCount} / {eventGuests.length} arrived
-          </p>
-        </div>
+      <div className="animate-fade-in-up">
+        <h1 className="text-3xl font-bold tracking-tight">Event Check-In</h1>
+        <p className="text-sm text-muted-foreground mt-2">
+          🎉 {arrivedCount} of {eventGuests.length} guests have arrived ({Math.round((arrivedCount / eventGuests.length) * 100)}%)
+        </p>
       </div>
 
+      {/* Progress Card */}
+      <Card className="animate-fade-in-up card-gradient p-6 border-0 hover:shadow-lg transition-all duration-300">
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="font-semibold">Check-in Progress</h2>
+            <span className="text-2xl font-bold text-teal">{Math.round((arrivedCount / eventGuests.length) * 100)}%</span>
+          </div>
+          <div className="h-5 w-full overflow-hidden rounded-full bg-muted/50 ring-1 ring-teal/20">
+            <div
+              className="h-full bg-gradient-to-r from-teal to-teal/70 transition-all duration-300"
+              style={{ width: `${(arrivedCount / eventGuests.length) * 100}%` }}
+            />
+          </div>
+          <p className="text-xs text-muted-foreground font-medium">{arrivedCount} checked in, {eventGuests.length - arrivedCount} remaining</p>
+        </div>
+      </Card>
+
       {/* Mode Toggle */}
-      <div className="flex gap-2">
+      <div className="animate-fade-in-up flex gap-3">
         <Button
-          variant={mode === "search" ? "default" : "outline"}
           onClick={() => {
             setMode("search")
             setShowScanner(false)
             setSelectedGuestId(null)
           }}
-          className="flex-1"
+          className={`flex-1 h-12 font-semibold transition-all duration-300 ${
+            mode === "search"
+              ? "bg-gradient-to-r from-cobalt to-cobalt/90 text-white hover:shadow-lg"
+              : "bg-muted/50 text-foreground hover:bg-muted border-0"
+          }`}
         >
-          <Search className="mr-2 h-4 w-4" />
+          <Search className="mr-2 h-5 w-5" />
           Search
         </Button>
         <Button
-          variant={mode === "scan" ? "default" : "outline"}
           onClick={() => {
             setMode("scan")
             setShowScanner(true)
             setSelectedGuestId(null)
           }}
-          className="flex-1"
+          className={`flex-1 h-12 font-semibold transition-all duration-300 ${
+            mode === "scan"
+              ? "bg-gradient-to-r from-teal to-teal/90 text-white hover:shadow-lg"
+              : "bg-muted/50 text-foreground hover:bg-muted border-0"
+          }`}
         >
-          <ScanLine className="mr-2 h-4 w-4" />
-          Scan
+          <ScanLine className="mr-2 h-5 w-5" />
+          Scan QR
         </Button>
       </div>
 
-      {/* Progress Bar */}
-      <Card className="p-4">
-        <div className="flex items-center justify-between mb-2">
-          <p className="text-sm font-medium">Progress</p>
-          <p className="text-sm font-semibold">{Math.round((arrivedCount / eventGuests.length) * 100)}%</p>
-        </div>
-        <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
-          <div
-            className="h-full bg-primary transition-all"
-            style={{ width: `${Math.round((arrivedCount / eventGuests.length) * 100)}%` }}
-          />
-        </div>
-      </Card>
-
       {/* Search Mode */}
       {mode === "search" && (
-        <div className="space-y-4">
+        <div className="space-y-4 animate-fade-in-up">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Type guest name..."
+              placeholder="Type guest name to check them in..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9"
+              className="pl-10 h-12 text-base border-primary/20 focus:border-primary/40 transition-colors"
               autoFocus
             />
           </div>
 
           {selectedGuestId && (
-            <Card className="flex items-center gap-3 border-teal-200 bg-teal-50 p-4">
-              <CheckCircle className="h-5 w-5 text-teal-600" />
-              <p className="font-medium text-teal-900">
-                {fullName(eventGuests.find((g) => g.id === selectedGuestId) || {})} checked in!
+            <Card className="animate-slide-in-left flex items-center gap-4 border-l-4 border-teal bg-gradient-to-r from-teal/15 to-teal/5 p-5 card-gradient border-0">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-teal/20">
+                <CheckCircle className="h-6 w-6 text-teal" />
+              </div>
+              <p className="text-base font-semibold text-foreground">
+                ✓ {fullName(eventGuests.find((g) => g.id === selectedGuestId) || {})} checked in!
               </p>
             </Card>
           )}
 
           {notFound && (
-            <Card className="flex flex-col items-center gap-2 p-6 text-center">
-              <p className="text-muted-foreground">
-                <strong>{searchQuery}</strong> not found
-              </p>
-              <p className="text-xs text-muted-foreground">
-                Not registered — please go to the front desk
-              </p>
+            <Card className="animate-fade-in-up flex flex-col items-center gap-3 p-8 text-center card-gradient border-0">
+              <div className="text-4xl">🔍</div>
+              <div>
+                <p className="font-semibold text-foreground">No guest found</p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  "{searchQuery}" is not registered — please verify the name
+                </p>
+              </div>
             </Card>
           )}
 
-          {searchResults.map((guest) => (
-            <Card key={guest.id} className="flex items-center justify-between p-4">
-              <div>
-                <p className="font-medium">{fullName(guest)}</p>
-                <p className="text-xs text-muted-foreground">{guest.phone}</p>
+          {searchResults.map((guest, idx) => (
+            <Card 
+              key={guest.id} 
+              className="animate-fade-in-up flex items-center justify-between gap-4 p-5 card-gradient border-0 hover:shadow-md hover:scale-102 transition-all duration-300 group"
+              style={{ animationDelay: `${idx * 50}ms` }}
+            >
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-base group-hover:text-primary transition-colors">{fullName(guest)}</p>
+                <p className="text-xs text-muted-foreground mt-1">📱 {guest.phone}</p>
               </div>
               <Button
-                size="sm"
                 onClick={() => handleCheckInGuest(guest.id)}
+                className="gap-2 bg-gradient-to-r from-teal to-teal/90 hover:from-teal/90 hover:to-teal/80 font-semibold text-white hover:shadow-lg transition-all"
               >
-                Mark Arrived
+                <CheckCircle className="h-4 w-4" />
+                Check In
               </Button>
             </Card>
           ))}

@@ -303,4 +303,48 @@
   .animation-delay-400 {
     animation-delay: 400ms;
   }
+
+  .animation-delay-50 {
+    animation-delay: 50ms;
+  }
+
+  .animation-delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .animation-delay-150 {
+    animation-delay: 150ms;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animation-delay-250 {
+    animation-delay: 250ms;
+  }
+
+  .scale-hover-105 {
+    @apply hover:scale-105 transition-transform;
+  }
+
+  .card-gradient {
+    @apply bg-gradient-to-br from-card to-card/50 border-0;
+  }
+
+  .stat-card {
+    @apply card-gradient p-6 hover:shadow-lg hover:scale-105 transition-all duration-300 rounded-xl;
+  }
+
+  .progress-bar {
+    @apply h-4 w-full overflow-hidden rounded-full bg-muted/50 ring-1 ring-border/20;
+  }
+
+  .stat-value {
+    @apply text-4xl font-bold tracking-tight;
+  }
+
+  .section-header {
+    @apply text-lg font-semibold mb-6;
+  }
 }
