@@ -35,14 +35,9 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          <Button
-            variant="ghost"
-            className="text-sm"
-            nativeButton={false}
-            render={<a href="#install" />}
-          >
+          <a href="/app" className="text-sm text-foreground/60 transition-colors hover:text-foreground">
             Sign in
-          </Button>
+          </a>
           <Button
             className="rounded-full px-5"
             nativeButton={false}
