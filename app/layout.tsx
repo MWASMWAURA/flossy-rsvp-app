@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono, Fraunces } from 'next/font/google'
+import { PwaRegister } from '@/components/pwa-register'
 import './globals.css'
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
@@ -19,6 +20,12 @@ export const metadata: Metadata = {
   description:
     'Flossy RSVP is the mobile-first app for event coordinators to manage guest outreach and breeze through event-day check-in.',
   generator: 'v0.app',
+  manifest: '/manifest.webmanifest',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Flossy RSVP',
+  },
   icons: {
     icon: [
       {
@@ -40,7 +47,11 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   colorScheme: 'light',
-  themeColor: '#f4ede1',
+  themeColor: '#1b3fd1',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 }
 
 export default function RootLayout({
@@ -55,6 +66,7 @@ export default function RootLayout({
     >
       <body className="bg-background font-sans antialiased">
         {children}
+        <PwaRegister />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

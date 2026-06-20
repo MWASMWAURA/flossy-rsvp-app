@@ -1,0 +1,43 @@
+{
+  "name": "Flossy RSVP",
+  "short_name": "Flossy",
+  "description": "Manage guest outreach and event-day check-in from your pocket.",
+  "start_url": "/app",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f7f8fd",
+  "theme_color": "#1b3fd1",
+  "icons": [
+    {
+      "src": "/icon-512.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Check-in",
+      "short_name": "Check-in",
+      "url": "/app/check-in"
+    },
+    {
+      "name": "Guest list",
+      "short_name": "Guests",
+      "url": "/app/guests"
+    }
+  ]
+}
