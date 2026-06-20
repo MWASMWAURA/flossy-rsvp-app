@@ -19,7 +19,7 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 md:px-8">
         <a href="#top" className="flex items-center gap-2.5" aria-label="Flossy RSVP home">
           <FlossyMark className="size-7 text-primary" />
-          <span className="font-serif text-xl font-semibold tracking-tight">Flossy</span>
+          <span className="font-serif text-xl font-semibold tracking-tight">FlossyRSVP</span>
         </a>
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">

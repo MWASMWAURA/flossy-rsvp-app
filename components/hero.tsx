@@ -6,25 +6,38 @@ import { CheckInCard } from "@/components/check-in-card"
 export function Hero() {
   return (
     <section id="top" className="relative overflow-hidden">
+      {/* Background image with overlay */}
+      <div className="absolute inset-0 -z-10 opacity-15">
+        <Image
+          src="/hero-bg.png"
+          alt=""
+          fill
+          className="object-cover"
+          priority
+          aria-hidden="true"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background/80 to-background" />
+      </div>
+      
       <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 pb-16 pt-14 md:grid-cols-2 md:gap-8 md:px-8 md:pb-24 md:pt-20">
         <div className="flex flex-col items-start">
-          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
-            <Sparkles className="size-3.5 text-primary" />
+          <span className="animate-fade-in-down inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
+            <Sparkles className="size-3.5 text-primary animate-pulse" />
             The reception desk in your pocket
           </span>
 
-          <h1 className="mt-6 text-pretty font-serif text-5xl font-semibold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
+          <h1 className="animate-fade-in-up animation-delay-100 mt-6 text-pretty font-serif text-5xl font-semibold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
             Welcome every guest{" "}
             <span className="italic text-primary">beautifully.</span>
           </h1>
 
-          <p className="mt-6 max-w-md text-pretty text-lg leading-relaxed text-muted-foreground">
+          <p className="animate-fade-in-up animation-delay-200 mt-6 max-w-md text-pretty text-lg leading-relaxed text-muted-foreground">
             Flossy RSVP helps event coordinators manage guest outreach and glide
             through event-day check-in — all from a phone that feels like a
             warm welcome.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          <div className="animate-fade-in-up animation-delay-300 mt-8 flex flex-wrap items-center gap-3">
             <Button
               size="lg"
               className="group rounded-full px-6"
@@ -45,7 +58,7 @@ export function Hero() {
             </Button>
           </div>
 
-          <dl className="mt-10 flex gap-8">
+          <dl className="animate-fade-in-up animation-delay-400 mt-10 flex gap-8">
             <div>
               <dt className="text-sm text-muted-foreground">Avg. check-in</dt>
               <dd className="font-serif text-2xl font-semibold">3.2s</dd>
@@ -61,7 +74,7 @@ export function Hero() {
           </dl>
         </div>
 
-        <div className="relative">
+        <div className="animate-slide-in-right animation-delay-200 relative">
           <div className="relative overflow-hidden rounded-3xl border border-border shadow-sm">
             <Image
               src="/reception-desk.png"
